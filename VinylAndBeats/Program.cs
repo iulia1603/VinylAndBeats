@@ -1,18 +1,36 @@
 using Microsoft.EntityFrameworkCore;
 using VinylAndBeats.Data;
+using Microsoft.AspNetCore.Identity;
+using VinylAndBeats.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    await SeedData.InitializeAsync(scope.ServiceProvider);
+}
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
