@@ -17,4 +17,9 @@ public class CategoryService : ICategoryService
 
     public async Task<Category?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         => await _unitOfWork.CategoryRepository.GetByIdAsync(id, cancellationToken);
+    public async Task AddAsync(Category category, CancellationToken cancellationToken = default)
+    {
+        await _unitOfWork.CategoryRepository.AddAsync(category, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+    }
 }

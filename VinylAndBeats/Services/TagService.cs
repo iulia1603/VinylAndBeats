@@ -19,4 +19,9 @@ public class TagService : ITagService
         => await _unitOfWork.TagRepository.GetByIdAsync(id, cancellationToken);
     public async Task<List<Tag>> GetByIdsAsync(List<int> ids, CancellationToken cancellationToken = default)
     => await _unitOfWork.TagRepository.GetByIdsAsync(ids, cancellationToken);
+    public async Task AddAsync(Tag tag, CancellationToken cancellationToken = default)
+    {
+        await _unitOfWork.TagRepository.AddAsync(tag, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+    }
 }
