@@ -1,6 +1,3 @@
-﻿namespace VinylAndBeats.DTOs
-{
-    public class CategoryDto
-    {
-    }
-}
+﻿namespace VinylAndBeats.DTOs;
+
+public record CategoryDto(int Id, string Name);

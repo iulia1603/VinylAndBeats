@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using VinylAndBeats.Data;
 using VinylAndBeats.Models;
 using VinylAndBeats.Repositories;
+using VinylAndBeats.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ITagService, TagService>();
 
 var app = builder.Build();
 

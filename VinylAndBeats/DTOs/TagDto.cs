@@ -1,6 +1,3 @@
-﻿namespace VinylAndBeats.DTOs
-{
-    public class TagDto
-    {
-    }
-}
+﻿namespace VinylAndBeats.DTOs;
+
+public record TagDto(int Id, string Name);

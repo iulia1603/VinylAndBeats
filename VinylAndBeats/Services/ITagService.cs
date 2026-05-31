@@ -1,6 +1,9 @@
-﻿namespace VinylAndBeats.Services
+﻿using VinylAndBeats.Models;
+
+namespace VinylAndBeats.Services;
+
+public interface ITagService
 {
-    public class ITagService
-    {
-    }
+    Task<List<Tag>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<Tag?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 }

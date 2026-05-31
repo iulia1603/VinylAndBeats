@@ -1,6 +1,9 @@
-﻿namespace VinylAndBeats.Services
+﻿using VinylAndBeats.Models;
+
+namespace VinylAndBeats.Services;
+
+public interface ICategoryService
 {
-    public class ICategoryService
-    {
-    }
+    Task<List<Category>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<Category?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 }
