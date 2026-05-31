@@ -29,6 +29,15 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
+                @{
+                    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var isAdmin = User.IsInRole("Admin");
+                }
+                @if (isAdmin || Model.SellerId == currentUserId)
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning w-100 mb-2">Editare</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger w-100 mb-2">Ștergere</a>
+                }
                 <a asp-action="Index" class="btn btn-secondary w-100">Înapoi la produse</a>
             </div>
         </div>

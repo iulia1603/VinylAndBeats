@@ -9,6 +9,7 @@ public static class ProductViewModelMappings
     {
         Id = product.Id,
         Name = product.Name,
+        SellerId = product.SellerId,
         Description = product.Description,
         Price = product.Price,
         Stock = product.Stock,

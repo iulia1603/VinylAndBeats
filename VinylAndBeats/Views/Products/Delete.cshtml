@@ -1,0 +1,21 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Șterge produs";
+}
+
+<h1>Șterge produs</h1>
+<p class="text-danger">Ești sigur că vrei să ștergi acest produs?</p>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>@Model.Name</h5>
+        <p>@Model.Description</p>
+        <p class="fw-bold">@Model.Price.ToString("0.00") lei — @Model.CategoryName</p>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Da, șterge</button>
+    <a asp-action="Index" class="btn btn-secondary">Anulează</a>
+</form>

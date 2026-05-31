@@ -13,6 +13,10 @@
             <div class="navbar-nav">
                 <a class="nav-link" asp-controller="Home" asp-action="Index">Acasă</a>
                 <a class="nav-link" asp-controller="Products" asp-action="Index">Produse</a>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <a class="nav-link" asp-controller="Products" asp-action="Create">Vinde un produs</a>
+                }
             </div>
             <div class="navbar-nav ms-auto">
                 @if (User.Identity != null && User.Identity.IsAuthenticated)

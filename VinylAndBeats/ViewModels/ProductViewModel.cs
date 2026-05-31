@@ -11,4 +11,5 @@ public class ProductViewModel
     public string CategoryName { get; set; } = string.Empty;
     public string SellerName { get; set; } = string.Empty;
     public List<string> Tags { get; set; } = new();
+    public string? SellerId { get; set; }
 }
