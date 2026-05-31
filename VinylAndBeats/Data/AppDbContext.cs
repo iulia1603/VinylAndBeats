@@ -19,5 +19,27 @@ namespace VinylAndBeats.Data
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Tags)
+                .WithMany(t => t.Products)
+                .UsingEntity<ProductTag>();
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CartItem>()
+                .HasOne(ci => ci.Product)
+                .WithMany()
+                .HasForeignKey(ci => ci.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }
