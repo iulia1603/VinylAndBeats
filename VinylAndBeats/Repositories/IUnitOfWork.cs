@@ -1,6 +1,9 @@
-﻿namespace VinylAndBeats.Repositories
+﻿namespace VinylAndBeats.Repositories;
+
+public interface IUnitOfWork
 {
-    public class IUnitOfWork
-    {
-    }
+    IProductRepository ProductRepository { get; }
+    ICategoryRepository CategoryRepository { get; }
+    ITagRepository TagRepository { get; }
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }
