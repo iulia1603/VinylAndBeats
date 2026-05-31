@@ -1,6 +1,17 @@
-﻿namespace VinylAndBeats.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VinylAndBeats.Models;
+
+public class OrderItem : BaseEntity
 {
-    public class OrderItem
-    {
-    }
+    public int OrderId { get; set; }
+    public Order? Order { get; set; }
+
+    public int ProductId { get; set; }
+    public Product? Product { get; set; }
+
+    [Range(1, 100000)]
+    public int Quantity { get; set; }
+
+    public decimal UnitPrice { get; set; }
 }
