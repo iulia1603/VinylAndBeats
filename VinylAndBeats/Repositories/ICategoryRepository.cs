@@ -1,6 +1,8 @@
-﻿namespace VinylAndBeats.Repositories
+﻿using VinylAndBeats.Models;
+
+namespace VinylAndBeats.Repositories;
+
+public interface ICategoryRepository : IRepository<Category>
 {
-    public class ICategoryRepository
-    {
-    }
+    Task<Category?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
 }
