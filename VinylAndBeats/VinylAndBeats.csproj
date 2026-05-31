@@ -25,7 +25,6 @@
     <Folder Include="Mappings\" />
     <Folder Include="Middleware\" />
     <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
     <Folder Include="ViewModels\" />
     <Folder Include="DTOs\" />
     <Folder Include="Views\Shared\" />
