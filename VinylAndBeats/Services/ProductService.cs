@@ -22,6 +22,8 @@ public class ProductService : IProductService
 
     public async Task AddAsync(Product product, CancellationToken cancellationToken = default)
     {
+        await EnsureCategoryExistsAsync(product.CategoryId, cancellationToken);
+
         _logger.LogInformation("Creare produs {Name} de vânzătorul {SellerId}", product.Name, product.SellerId);
         await _unitOfWork.ProductRepository.AddAsync(product, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -30,6 +32,8 @@ public class ProductService : IProductService
 
     public async Task UpdateAsync(Product product, CancellationToken cancellationToken = default)
     {
+        await EnsureCategoryExistsAsync(product.CategoryId, cancellationToken);
+
         _logger.LogInformation("Actualizare produs {ProductId}", product.Id);
         _unitOfWork.ProductRepository.Update(product);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -44,5 +48,12 @@ public class ProductService : IProductService
             _unitOfWork.ProductRepository.Delete(product);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
+    }
+
+    private async Task EnsureCategoryExistsAsync(int categoryId, CancellationToken cancellationToken)
+    {
+        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(categoryId, cancellationToken);
+        if (category == null)
+            throw new ArgumentException("Categoria selectată nu există.");
     }
 }
