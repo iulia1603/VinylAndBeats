@@ -5,6 +5,7 @@ using VinylAndBeats.Models;
 using VinylAndBeats.Repositories;
 using VinylAndBeats.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
