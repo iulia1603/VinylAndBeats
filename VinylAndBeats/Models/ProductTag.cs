@@ -1,6 +1,6 @@
 ﻿namespace VinylAndBeats.Models
 {
-    public class Order
+    public class ProductTag
     {
     }
 }
