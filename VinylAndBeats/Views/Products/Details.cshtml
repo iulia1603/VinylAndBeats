@@ -1,0 +1,36 @@
+﻿@model ProductViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h1>@Model.Name</h1>
+        <p class="text-muted">
+            <strong>Categorie:</strong> @Model.CategoryName |
+            <strong>Vânzător:</strong> @Model.SellerName |
+            <strong>Stoc:</strong> @Model.Stock
+        </p>
+        <h4 class="text-primary">@Model.Price.ToString("0.00") lei</h4>
+        <hr />
+        <p>@Model.Description</p>
+        @if (Model.Tags?.Any() == true)
+        {
+            <div class="mt-3">
+                <strong>Etichete:</strong>
+                @foreach (var tag in Model.Tags)
+                {
+                    <span class="badge bg-secondary">@tag</span>
+                }
+            </div>
+        }
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <a asp-action="Index" class="btn btn-secondary w-100">Înapoi la produse</a>
+            </div>
+        </div>
+    </div>
+</div>

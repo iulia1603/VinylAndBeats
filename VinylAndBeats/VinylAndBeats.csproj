@@ -22,12 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
-    <Folder Include="Mappings\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
 
 </Project>

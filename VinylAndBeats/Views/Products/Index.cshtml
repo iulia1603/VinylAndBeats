@@ -1,0 +1,37 @@
+﻿@model List<ProductViewModel>
+
+@{
+    ViewData["Title"] = "Produse";
+}
+
+<h1 class="mb-4">Produse</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p class="text-muted">Nu sunt produse.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var product in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">@product.Name</h5>
+                        <p class="card-text">
+                            @(product.Description.Length > 100 ? product.Description[..100] + "..." : product.Description)
+                        </p>
+                        <p class="fw-bold mb-0">@product.Price.ToString("0.00") lei</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted fst-italic">@product.CategoryName — vândut de @product.SellerName</small>
+                        <div class="mt-2">
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-info">Detalii</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

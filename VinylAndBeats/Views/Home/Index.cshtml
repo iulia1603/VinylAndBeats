@@ -1,0 +1,56 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Acasă";
+}
+
+<div class="text-center mb-5">
+    <h1>VinylAndBeats</h1>
+    <p class="lead text-muted">Bazarul tău de muzică — instrumente, viniluri, CD-uri și accesorii.</p>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>@Model.TotalProducts</h3>
+                <p class="text-muted">Produse la vânzare</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>@Model.TotalCategories</h3>
+                <p class="text-muted">Categorii</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-3">Cele mai noi produse</h2>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+    @foreach (var product in Model.RecentProducts)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">@product.Name</h5>
+                    <p class="card-text">
+                        @(product.Description.Length > 80 ? product.Description[..80] + "..." : product.Description)
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">@product.CategoryName — @product.Price.ToString("0.00") lei</small>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"
+                       class="btn btn-sm btn-info float-end">Detalii</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center">
+    <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary">Vezi toate produsele</a>
+</div>
