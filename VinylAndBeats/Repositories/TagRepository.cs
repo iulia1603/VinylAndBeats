@@ -1,6 +1,9 @@
-﻿namespace VinylAndBeats.Repositories
+﻿using VinylAndBeats.Data;
+using VinylAndBeats.Models;
+
+namespace VinylAndBeats.Repositories;
+
+public class TagRepository : Repository<Tag>, ITagRepository
 {
-    public class TagRepository
-    {
-    }
+    public TagRepository(AppDbContext context) : base(context) { }
 }

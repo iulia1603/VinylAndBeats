@@ -1,6 +1,7 @@
-﻿namespace VinylAndBeats.Repositories
+﻿using VinylAndBeats.Models;
+
+namespace VinylAndBeats.Repositories;
+
+public interface ITagRepository : IRepository<Tag>
 {
-    public class ITagRepository
-    {
-    }
 }
