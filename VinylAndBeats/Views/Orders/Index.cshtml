@@ -1,0 +1,32 @@
+﻿@model List<OrderViewModel>
+@{
+    ViewData["Title"] = "Comenzile mele";
+}
+
+<h1 class="mb-4">Comenzile mele</h1>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Nu ai nicio comandă încă.</p>
+}
+else
+{
+    @foreach (var order in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between">
+                <span>Comanda #@order.Id — @order.OrderDate.ToString("dd.MM.yyyy HH:mm")</span>
+                <span class="fw-bold">@order.Total.ToString("0.00") lei</span>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (var item in order.Items)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@item.ProductName × @item.Quantity</span>
+                        <span>@item.Subtotal.ToString("0.00") lei</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+}

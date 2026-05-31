@@ -1,0 +1,47 @@
+﻿@model CartViewModel
+@{
+    ViewData["Title"] = "Coșul meu";
+}
+
+<h1 class="mb-4">Coșul meu</h1>
+
+@if (!Model.Items.Any())
+{
+    <p class="text-muted">Coșul tău e gol. <a asp-controller="Products" asp-action="Index">Vezi produsele</a>.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr><th>Produs</th><th>Preț</th><th>Cantitate</th><th>Subtotal</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.UnitPrice.ToString("0.00") lei</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Subtotal.ToString("0.00") lei</td>
+                    <td>
+                        <form asp-action="Remove" method="post" class="d-inline">
+                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Scoate</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr class="fw-bold">
+                <td colspan="3" class="text-end">Total:</td>
+                <td>@Model.Total.ToString("0.00") lei</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <form asp-action="Checkout" method="post">
+        <button type="submit" class="btn btn-success btn-lg">Finalizează comanda</button>
+    </form>
+}

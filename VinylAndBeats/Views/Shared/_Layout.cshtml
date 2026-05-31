@@ -16,6 +16,8 @@
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     <a class="nav-link" asp-controller="Products" asp-action="Create">Vinde un produs</a>
+                    <a class="nav-link" asp-controller="Cart" asp-action="Index">Coș</a>
+                    <a class="nav-link" asp-controller="Orders" asp-action="Index">Comenzile mele</a>
                 }
             </div>
             <div class="navbar-nav ms-auto">
@@ -36,6 +38,14 @@
     </nav>
 
     <main class="container mt-4">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
         @RenderBody()
     </main>
 

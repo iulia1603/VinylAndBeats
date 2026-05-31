@@ -40,6 +40,13 @@ else
                                 <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-warning">Editare</a>
                                 <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-danger">Ștergere</a>
                             }
+                            @if (User.Identity?.IsAuthenticated == true && product.SellerId != currentUserId)
+                            {
+                                <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
+                                    <input type="hidden" name="productId" value="@product.Id" />
+                                    <button type="submit" class="btn btn-sm btn-success">În coș</button>
+                                </form>
+                            }
                         </div>
                     </div>
                 </div>
