@@ -6,8 +6,8 @@
     <div class="row">
       <div class="col-md-8">
         <h1>{{ p.name }}</h1>
-        <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{ p.name }}"
-             class="img-fluid rounded mb-3" style="max-height: 400px; object-fit: cover;">
+        <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{ p.name }}" class="img-fluid rounded mb-3"
+          style="max-height: 400px; object-fit: cover;">
         <p class="text-muted">
           <strong>Categorie:</strong> {{ p.categoryName }} |
           <strong>Vânzător:</strong> {{ p.sellerName }} |
@@ -22,9 +22,15 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card"><div class="card-body">
-          <button class="btn btn-secondary w-100" (click)="goBack()">Înapoi la produse</button>
-        </div></div>
+        <div class="card">
+          <div class="card-body">
+            <ng-container *ngIf="canModify()">
+              <button class="btn btn-warning w-100 mb-2" (click)="edit()">Editează</button>
+              <button class="btn btn-danger w-100 mb-2" (click)="remove()">Șterge</button>
+            </ng-container>
+            <button class="btn btn-secondary w-100" (click)="goBack()">Înapoi la produse</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
