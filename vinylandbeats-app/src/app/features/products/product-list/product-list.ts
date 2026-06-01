@@ -1,8 +1,6 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product';
-import { AuthService } from '../../../core/services/auth';
 import { Product } from '../../../shared/models/product';
 
 @Component({
@@ -13,40 +11,27 @@ import { Product } from '../../../shared/models/product';
 })
 export class ProductList implements OnInit {
   private productService = inject(ProductService);
-  private authService = inject(AuthService);
-  private router = inject(Router);
 
   products = signal<Product[]>([]);
+  query = signal('');
   loading = signal(true);
   error = signal<string | null>(null);
 
+  // Lista filtrată — se recalculează automat când se schimbă products() sau query()
+  filtered = computed(() => {
+    const q = this.query().toLowerCase().trim();
+    if (!q) return this.products();
+    return this.products().filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.categoryName.toLowerCase().includes(q) ||
+      p.tags.some(t => t.name.toLowerCase().includes(q))
+    );
+  });
+
   ngOnInit(): void {
-    this.loadProducts();
-  }
-
-  private loadProducts(): void {
-    this.loading.set(true);
     this.productService.getAll().subscribe({
-      next: products => {
-        this.products.set(products);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.error.set('Nu s-au putut încărca produsele');
-        this.loading.set(false);
-      }
+      next: products => { this.products.set(products); this.loading.set(false); },
+      error: () => { this.error.set('Nu s-au putut încărca produsele'); this.loading.set(false); }
     });
-  }
-
-  isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
-  }
-
-  viewProduct(id: number): void {
-    this.router.navigate(['/products', id]);
-  }
-
-  createProduct(): void {
-    this.router.navigate(['/products/new']);
   }
 }

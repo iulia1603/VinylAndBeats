@@ -121,6 +121,8 @@ app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseCors("AllowAngularDev");

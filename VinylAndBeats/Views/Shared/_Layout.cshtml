@@ -11,6 +11,7 @@
         <div class="container">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">VinylAndBeats</a>
             <div class="navbar-nav">
+                <a class="nav-link" href="/spa/index.html">Vitrină (live)</a>
                 <a class="nav-link" asp-controller="Home" asp-action="Index">Acasă</a>
                 <a class="nav-link" asp-controller="Products" asp-action="Index">Produse</a>
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
