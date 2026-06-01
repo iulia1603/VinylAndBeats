@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Produse</h1>
+    <button *ngIf="isAuthenticated()" class="btn btn-success" (click)="createProduct()">
+      + Vinde un produs
+    </button>
+  </div>
+
+  <div *ngIf="loading()" class="alert alert-info">Se încarcă...</div>
+  <div *ngIf="error()" class="alert alert-danger">{{ error() }}</div>
+
+  <div *ngIf="!loading() && !error() && products().length === 0" class="alert alert-warning">
+    Nu sunt produse disponibile.
+  </div>
+
+  <div *ngIf="!loading() && !error()" class="row">
+    <div *ngFor="let product of products()" class="col-md-6 col-lg-4 mb-4">
+      <div class="card h-100">
+        <img *ngIf="product.imageUrl"
+             [src]="product.imageUrl"
+             alt="{{ product.name }}"
+             class="card-img-top"
+             style="height: 180px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="text-muted mb-2">{{ product.categoryName }}</p>
+          <p class="card-text">{{ product.description | slice:0:120 }}...</p>
+          <p class="fw-bold">{{ product.price | number:'1.2-2' }} lei</p>
+          <div *ngIf="product.tags.length" class="mb-2">
+            <span *ngFor="let t of product.tags" class="badge bg-info me-1">{{ t.name }}</span>
+          </div>
+          <small class="text-muted d-block mb-2">Vândut de {{ product.sellerName }}</small>
+          <button class="btn btn-sm btn-primary" (click)="viewProduct(product.id)">
+            Detalii
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
