@@ -1,56 +1,47 @@
 ﻿@model HomeViewModel
-
 @{
     ViewData["Title"] = "Acasă";
 }
 
-<div class="text-center mb-5">
-    <h1>VinylAndBeats</h1>
-    <p class="lead text-muted">Bazarul tău de muzică — instrumente, viniluri, CD-uri și accesorii.</p>
+<div class="p-5 mb-4 bg-dark text-white rounded-3 text-center">
+    <h1 class="display-5 fw-bold">VinylAndBeats</h1>
+    <p class="lead">Bazarul tău de muzică — cumpără și vinde instrumente, viniluri, CD-uri și accesorii.</p>
 </div>
 
-<div class="row mb-4">
-    <div class="col-md-6">
-        <div class="card text-center">
-            <div class="card-body">
-                <h3>@Model.TotalProducts</h3>
-                <p class="text-muted">Produse la vânzare</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card text-center">
-            <div class="card-body">
-                <h3>@Model.TotalCategories</h3>
-                <p class="text-muted">Categorii</p>
-            </div>
-        </div>
-    </div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Cele mai noi anunțuri</h2>
+    <a asp-controller="Products" asp-action="Index" class="text-decoration-none">Vezi toate →</a>
 </div>
 
-<h2 class="mb-3">Cele mai noi produse</h2>
-
-<div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-    @foreach (var product in Model.RecentProducts)
-    {
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">@product.Name</h5>
-                    <p class="card-text">
-                        @(product.Description.Length > 80 ? product.Description[..80] + "..." : product.Description)
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">@product.CategoryName — @product.Price.ToString("0.00") lei</small>
-                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"
-                       class="btn btn-sm btn-info float-end">Detalii</a>
+@if (!Model.RecentProducts.Any())
+{
+    <p class="text-muted">Nu sunt produse încă.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        @foreach (var product in Model.RecentProducts)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top" style="height: 160px; object-fit: cover;" alt="@product.Name" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">@product.Name</h5>
+                        <span class="badge bg-secondary mb-2">@product.CategoryName</span>
+                        <p class="card-text small">
+                            @(product.Description.Length > 70 ? product.Description[..70] + "..." : product.Description)
+                        </p>
+                        <p class="fw-bold mb-0">@product.Price.ToString("0.00") lei</p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"
+                           class="btn btn-sm btn-info w-100">Detalii</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
-
-<div class="text-center">
-    <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary">Vezi toate produsele</a>
-</div>
+        }
+    </div>
+}

@@ -38,12 +38,13 @@ public class CartService : ICartService
         if (product.SellerId == userId)
             throw new ArgumentException("Nu îți poți adăuga în coș propriul produs.");
 
-        if (product.Stock < quantity)
-            throw new ArgumentException($"Stoc insuficient. Disponibil: {product.Stock}.");
-
         var cart = await GetOrCreateCartAsync(userId, cancellationToken);
-
         var existing = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+        var alreadyInCart = existing?.Quantity ?? 0;
+
+        if (product.Stock < alreadyInCart + quantity)
+            throw new ArgumentException($"Stoc insuficient. Disponibil: {product.Stock}, deja în coș: {alreadyInCart}.");
+
         if (existing != null)
             existing.Quantity += quantity;
         else
@@ -100,5 +101,22 @@ public class CartService : ICartService
 
         _logger.LogInformation("Comandă {OrderId} plasată de {UserId}, total {Total}", order.Id, userId, total);
         return order;
+    }
+
+    public async Task UpdateQuantityAsync(string userId, int cartItemId, int quantity, CancellationToken cancellationToken = default)
+    {
+        if (quantity < 1)
+            throw new ArgumentException("Cantitatea trebuie să fie cel puțin 1.");
+
+        var cart = await _unitOfWork.CartRepository.GetByUserIdWithItemsAsync(userId, cancellationToken);
+        var item = cart?.Items.FirstOrDefault(i => i.Id == cartItemId);
+        if (item == null)
+            throw new KeyNotFoundException("Produsul nu e în coș.");
+
+        if (item.Product!.Stock < quantity)
+            throw new ArgumentException($"Stoc insuficient. Disponibil: {item.Product.Stock}.");
+
+        item.Quantity = quantity;
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

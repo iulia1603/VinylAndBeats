@@ -23,9 +23,9 @@ public class HomeController : Controller
 
         var viewModel = new HomeViewModel
         {
-            RecentProducts = products.Take(3).ToViewModelList(),
-            TotalProducts = products.Count,
-            TotalCategories = categories.Count
+            RecentProducts = products.Where(p => p.Stock > 0).Take(4).ToViewModelList(),
+            Categories = categories,
+            TotalProducts = products.Count
         };
 
         return View(viewModel);

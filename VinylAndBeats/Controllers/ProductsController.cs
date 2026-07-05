@@ -15,22 +15,34 @@ public class ProductsController : Controller
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
     private readonly ITagService _tagService;
+    private readonly IWebHostEnvironment _env;
 
     public ProductsController(
         IProductService productService,
         ICategoryService categoryService,
-        ITagService tagService)
+        ITagService tagService,
+        IWebHostEnvironment env)
     {
         _productService = productService;
         _categoryService = categoryService;
         _tagService = tagService;
+        _env = env;
     }
 
     // GET: /Products — public
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index(int? categoryId, string? search, CancellationToken cancellationToken)
     {
-        var products = await _productService.GetAllAsync(cancellationToken);
-        return View(products.ToViewModelList());
+        var products = await _productService.GetFilteredAsync(categoryId, search, cancellationToken);
+        var categories = await _categoryService.GetAllAsync(cancellationToken);
+
+        var vm = new ProductsIndexViewModel
+        {
+            Products = products.Where(p => p.Stock > 0).ToViewModelList(),
+            Categories = categories,
+            SelectedCategoryId = categoryId,
+            Search = search
+        };
+        return View(vm);
     }
 
     // GET: /Products/Details/5 — public
@@ -63,15 +75,26 @@ public class ProductsController : Controller
             return View(viewModel);
         }
 
+        if (viewModel.ImageFile is { Length: > 0 })
+        {
+            var ext = Path.GetExtension(viewModel.ImageFile.FileName).ToLowerInvariant();
+            if (!AllowedExtensions.Contains(ext))
+            {
+                ModelState.AddModelError("ImageFile", "Tip de fișier neacceptat (jpg, png, webp, gif).");
+                await LoadDropdownsAsync(viewModel, cancellationToken);
+                return View(viewModel);
+            }
+        }
+
         var product = new Product
         {
             Name = viewModel.Name,
             Description = viewModel.Description,
             Price = viewModel.Price,
             Stock = viewModel.Stock,
-            ImageUrl = viewModel.ImageUrl,
+            ImageUrl = await SaveImageAsync(viewModel.ImageFile),
             CategoryId = viewModel.CategoryId,
-            SellerId = User.FindFirstValue(ClaimTypes.NameIdentifier) // vânzătorul = userul logat
+            SellerId = User.FindFirstValue(ClaimTypes.NameIdentifier)
         };
 
         await _productService.AddAsync(product, cancellationToken);
@@ -102,7 +125,7 @@ public class ProductsController : Controller
             Description = product.Description,
             Price = product.Price,
             Stock = product.Stock,
-            ImageUrl = product.ImageUrl,
+            ExistingImageUrl = product.ImageUrl,
             CategoryId = product.CategoryId,
             SelectedTagIds = product.Tags?.Select(t => t.Id).ToList() ?? new()
         };
@@ -118,21 +141,34 @@ public class ProductsController : Controller
     {
         if (id != viewModel.Id) return NotFound();
 
+        var product = await _productService.GetByIdAsync(id, cancellationToken);
+        if (product == null) return NotFound();
+        if (!User.CanModifyProduct(product)) return Forbid();
+
         if (!ModelState.IsValid)
         {
+            viewModel.ExistingImageUrl = product.ImageUrl;
             await LoadDropdownsAsync(viewModel, cancellationToken);
             return View(viewModel);
         }
 
-        var product = await _productService.GetByIdAsync(id, cancellationToken);
-        if (product == null) return NotFound();
-        if (!User.CanModifyProduct(product)) return Forbid();
+        if (viewModel.ImageFile is { Length: > 0 })
+        {
+            var ext = Path.GetExtension(viewModel.ImageFile.FileName).ToLowerInvariant();
+            if (!AllowedExtensions.Contains(ext))
+            {
+                ModelState.AddModelError("ImageFile", "Tip de fișier neacceptat (jpg, png, webp, gif).");
+                viewModel.ExistingImageUrl = product.ImageUrl;
+                await LoadDropdownsAsync(viewModel, cancellationToken);
+                return View(viewModel);
+            }
+            product.ImageUrl = await SaveImageAsync(viewModel.ImageFile);
+        }
 
         product.Name = viewModel.Name;
         product.Description = viewModel.Description;
         product.Price = viewModel.Price;
         product.Stock = viewModel.Stock;
-        product.ImageUrl = viewModel.ImageUrl;
         product.CategoryId = viewModel.CategoryId;
 
         product.Tags ??= new();
@@ -172,6 +208,20 @@ public class ProductsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    private static readonly string[] AllowedExtensions = { ".jpg", ".jpeg", ".png", ".webp", ".gif" };
+
+    private async Task<string?> SaveImageAsync(IFormFile? file)
+    {
+        if (file == null || file.Length == 0) return null;
+        var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var imagesDir = Path.Combine(_env.WebRootPath, "images");
+        Directory.CreateDirectory(imagesDir);
+        var fileName = $"{Guid.NewGuid():N}{ext}";
+        var savePath = Path.Combine(imagesDir, fileName);
+        await using var stream = System.IO.File.Create(savePath);
+        await file.CopyToAsync(stream);
+        return $"/images/{fileName}";
+    }
     private async Task LoadDropdownsAsync(CreateProductViewModel viewModel, CancellationToken cancellationToken)
     {
         var categories = await _categoryService.GetAllAsync(cancellationToken);

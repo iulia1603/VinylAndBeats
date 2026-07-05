@@ -56,4 +56,7 @@ public class ProductService : IProductService
         if (category == null)
             throw new ArgumentException("Categoria selectată nu există.");
     }
+
+    public async Task<List<Product>> GetFilteredAsync(int? categoryId, string? search, CancellationToken cancellationToken = default)
+    => await _unitOfWork.ProductRepository.GetFilteredAsync(categoryId, search, cancellationToken);
 }

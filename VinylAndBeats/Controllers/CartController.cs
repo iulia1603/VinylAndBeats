@@ -29,7 +29,8 @@ public class CartController : Controller
                 ProductId = i.ProductId,
                 ProductName = i.Product?.Name ?? "N/A",
                 UnitPrice = i.Product?.Price ?? 0,
-                Quantity = i.Quantity
+                Quantity = i.Quantity,
+                Stock = i.Product?.Stock ?? 0
             }).ToList()
         };
         return View(vm);
@@ -74,5 +75,20 @@ public class CartController : Controller
             TempData["Error"] = ex.Message;
             return RedirectToAction(nameof(Index));
         }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateQuantity(int cartItemId, int quantity, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _cartService.UpdateQuantityAsync(UserId, cartItemId, quantity, cancellationToken);
+        }
+        catch (Exception ex) when (ex is ArgumentException or KeyNotFoundException)
+        {
+            TempData["Error"] = ex.Message;
+        }
+        return RedirectToAction(nameof(Index));
     }
 }

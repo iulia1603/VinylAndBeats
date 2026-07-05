@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VinylAndBeats.Models;
 
@@ -17,18 +18,17 @@ public class CreateProductViewModel
     [Display(Name = "Preț")]
     public decimal Price { get; set; }
 
-    [Range(0, 100000, ErrorMessage = "Stocul trebuie să fie pozitiv")]
-    public int Stock { get; set; }
+    [Range(1, 100000, ErrorMessage = "Stocul trebuie să fie cel puțin 1")]
+    public int Stock { get; set; } = 1;
 
-    [Display(Name = "Link imagine (opțional)")]
-    public string? ImageUrl { get; set; }
+    [Display(Name = "Poză produs")]
+    public IFormFile? ImageFile { get; set; }
 
     [Required(ErrorMessage = "Categoria este obligatorie")]
     [Display(Name = "Categorie")]
     public int CategoryId { get; set; }
 
     public List<SelectListItem> Categories { get; set; } = new();
-
     public List<int> SelectedTagIds { get; set; } = new();
     public List<Tag> AvailableTags { get; set; } = new();
 }

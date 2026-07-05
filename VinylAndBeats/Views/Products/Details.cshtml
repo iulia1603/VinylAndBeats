@@ -7,6 +7,10 @@
 <div class="row">
     <div class="col-md-8">
         <h1>@Model.Name</h1>
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded mb-3" style="max-height: 400px; object-fit: cover;" />
+        }
         <p class="text-muted">
             <strong>Categorie:</strong> @Model.CategoryName |
             <strong>Vânzător:</strong> @Model.SellerName |
@@ -37,6 +41,26 @@
                 {
                     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning w-100 mb-2">Editare</a>
                     <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger w-100 mb-2">Ștergere</a>
+                }
+                @if (Model.SellerId != currentUserId && Model.Stock > 0)
+                {
+                    if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="mb-2">
+                            <input type="hidden" name="productId" value="@Model.Id" />
+                            <label class="form-label small">Cantitate</label>
+                            <input type="number" name="quantity" value="1" min="1" max="@Model.Stock" class="form-control mb-2" />
+                            <button type="submit" class="btn btn-success w-100">Adaugă în coș</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Auth" asp-action="Login" class="btn btn-success w-100 mb-2">Adaugă în coș</a>
+                    }
+                }
+                else if (Model.Stock == 0)
+                {
+                    <div class="alert alert-secondary py-2 text-center mb-2">Stoc epuizat</div>
                 }
                 <a asp-action="Index" class="btn btn-secondary w-100">Înapoi la produse</a>
             </div>

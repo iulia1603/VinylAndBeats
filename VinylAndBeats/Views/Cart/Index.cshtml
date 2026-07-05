@@ -21,7 +21,13 @@ else
                 <tr>
                     <td>@item.ProductName</td>
                     <td>@item.UnitPrice.ToString("0.00") lei</td>
-                    <td>@item.Quantity</td>
+                    <td>
+                        <form asp-action="UpdateQuantity" method="post" class="d-flex gap-1">
+                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                            <input type="number" name="quantity" value="@item.Quantity" min="1" max="@item.Stock"
+                                   class="form-control form-control-sm" style="width: 70px;" />
+                        </form>
+                    </td>
                     <td>@item.Subtotal.ToString("0.00") lei</td>
                     <td>
                         <form asp-action="Remove" method="post" class="d-inline">
