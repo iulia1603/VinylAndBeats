@@ -255,6 +255,23 @@ Controller
 
 ---
 
+### Tags API
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/api/tags` | Public | Get all tags |
+| POST | `/api/tags` | Admin | Create a tag |
+
+---
+
+### Reviews API
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/api/products/{productId}/reviews` | Public | Get reviews for a product |
+| POST | `/api/products/{productId}/reviews` | User | Create a review for a purchased product |
+
+---
 
 
 ## Screenshots
