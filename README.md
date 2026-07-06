@@ -82,6 +82,42 @@ Set your PostgreSQL connection string:
 
 ---
 
+### 3. Apply migrations
+
+From the backend project folder:
+
+```bash
+cd VinylAndBeats
+dotnet ef database update
+```
+
+The application also uses `SeedData.cs` to create initial data such as roles, an admin account, categories, tags and example products.
+
+---
+
+### 4. Run the backend
+
+```bash
+dotnet restore
+dotnet build
+dotnet run
+```
+
+The application will run locally, for example at:
+
+```txt
+https://localhost:7161
+```
+
+Swagger is available at:
+
+```txt
+https://localhost:7161/swagger
+```
+
+---
+
+
 
 ## Screenshots
 
