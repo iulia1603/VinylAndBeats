@@ -20,3 +20,20 @@ The project uses a hybrid frontend approach:
 - **API Documentation:** Swagger / OpenAPI
 
 ---
+
+## Features
+
+- User registration and login
+- Role-based authorization with Admin and User
+- Product marketplace with create, edit, delete and details pages
+- Product categories and tags
+- Shopping cart 
+- Order placement and stock update
+- Product reviews
+- Angular reviews page consuming the REST API
+- Admin-only API endpoints for creating categories and tags
+- Global exception handling middleware
+- Client-side and server-side form validation
+- Swagger UI for testing API endpoints
+
+---
