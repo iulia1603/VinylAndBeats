@@ -223,6 +223,39 @@ Controller
 
 ---
 
+## API Endpoints
+
+### Auth API
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/auth/register` | Public | Register a new user |
+| POST | `/api/auth/login` | Public | Login and receive a JWT token |
+
+---
+
+### Products API
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/api/products` | Public | Get all products |
+| GET | `/api/products/{id}` | Public | Get product by ID |
+| POST | `/api/products` | User | Create a product |
+| PUT | `/api/products/{id}` | Owner/Admin | Update a product |
+| DELETE | `/api/products/{id}` | Owner/Admin | Delete a product |
+
+---
+
+### Categories API
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/api/categories` | Public | Get all categories |
+| POST | `/api/categories` | Admin | Create a category |
+
+---
+
+
 
 ## Screenshots
 
