@@ -38,6 +38,51 @@ The project uses a hybrid frontend approach:
 
 ---
 
+## Getting Started
+
+### Prerequisites
+
+Make sure you have installed:
+
+- .NET SDK
+- PostgreSQL
+- Node.js and npm
+- Angular CLI, optional if you want to run the Angular project separately
+
+---
+
+## Run Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/VinylAndBeats.git
+cd VinylAndBeats
+```
+
+Replace `YOUR_USERNAME` with your GitHub username.
+
+---
+
+### 2. Configure the database connection
+
+Open:
+
+```txt
+VinylAndBeats/appsettings.json
+```
+
+Set your PostgreSQL connection string:
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Database=vinylandbeats;Username=postgres;Password=your_password"
+}
+```
+
+---
+
+
 ## Screenshots
 
 
