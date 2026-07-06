@@ -37,3 +37,54 @@ The project uses a hybrid frontend approach:
 - Swagger UI for testing API endpoints
 
 ---
+
+## Screenshots
+
+
+### Home Page
+
+![Home Page](screenshots/HomePage.png)
+
+### Products Page
+
+![Products Page](screenshots/ProductsPage.png)
+
+### Product Details
+
+![Product Details](screenshots/ProductDetails.png)
+
+### Authentification
+
+![Authentification](screenshots/Auth.png)
+
+### Register
+
+![Register](screenshots/Register.png)
+
+### Create Product
+
+![Create Product](screenshots/CreateProduct.png)
+
+### My Products
+
+![My Products](screenshots/MyProducts.png)
+
+### Cart
+
+![Cart](screenshots/Cart.png)
+
+### Orders
+
+![Orders](screenshots/Orders.png)
+
+### Create Review
+
+![Create Review](screenshots/CreateReview.png)
+
+### Angular Reviews Page
+
+![Angular Reviews Page](screenshots/AngularReviewsPage.png)
+
+### Swagger UI
+
+![Swagger UI](screenshots/SwaggerUI.png)
