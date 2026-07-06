@@ -200,6 +200,29 @@ vinylandbeats-app/
 
 ---
 
+## Architecture
+
+The backend follows a layered architecture:
+
+```txt
+Controller
+→ Service
+→ Repository
+→ UnitOfWork
+→ AppDbContext
+→ PostgreSQL
+```
+
+- **Controllers** handle HTTP requests.
+- **Services** contain business logic.
+- **Repositories** handle data access.
+- **UnitOfWork** groups repository access and database saving.
+- **DTOs** are used by the API to avoid exposing EF Core entities directly.
+- **ViewModels** are used by Razor Views.
+- **Mappings** convert entities to DTOs or ViewModels.
+
+---
+
 
 ## Screenshots
 
