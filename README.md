@@ -173,6 +173,34 @@ for the default admin credentials.
 
 ---
 
+## Project Structure
+
+```txt
+VinylAndBeats/
+├── Authorization/          # Authorization helper methods
+├── Controllers/            # MVC Razor controllers
+│   └── Api/                # REST API controllers
+├── Data/                   # AppDbContext and SeedData
+├── DTOs/                   # Data Transfer Objects used by the API
+├── Mappings/               # Mapping methods for DTOs and ViewModels
+├── Middleware/             # Exception handling and logging middleware
+├── Migrations/             # EF Core migrations
+├── Models/                 # EF Core entities
+├── Repositories/           # Repository Pattern and UnitOfWork
+├── Services/               # Business logic layer
+├── ViewModels/             # Razor ViewModels
+├── Views/                  # Razor .cshtml pages
+└── wwwroot/                # Static files, uploaded images and Angular build
+
+vinylandbeats-app/
+├── src/app/core/services/  # Angular services
+├── src/app/shared/models/  # Angular interfaces
+└── src/app/features/       # Angular feature pages
+```
+
+---
+
+
 ## Screenshots
 
 
