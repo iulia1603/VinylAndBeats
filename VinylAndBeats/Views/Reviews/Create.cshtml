@@ -1,0 +1,37 @@
+﻿@model CreateReviewViewModel
+@{
+    ViewData["Title"] = "Lasă o recenzie";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1>Lasă o recenzie</h1>
+        <p class="text-muted">Produs: <strong>@Model.ProductName</strong></p>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <form asp-action="Create" method="post">
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" asp-for="ProductName" />
+
+            <div class="mb-3">
+                <label asp-for="Rating" class="form-label">Rating (1-5)</label>
+                <input asp-for="Rating" type="number" min="1" max="5" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Comment" class="form-label">Comentariu</label>
+                <textarea asp-for="Comment" rows="4" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Trimite recenzia</button>
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary">Anulează</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

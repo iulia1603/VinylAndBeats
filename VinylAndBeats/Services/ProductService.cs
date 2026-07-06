@@ -59,4 +59,9 @@ public class ProductService : IProductService
 
     public async Task<List<Product>> GetFilteredAsync(int? categoryId, string? search, CancellationToken cancellationToken = default)
     => await _unitOfWork.ProductRepository.GetFilteredAsync(categoryId, search, cancellationToken);
+    public async Task<List<Product>> GetBySellerAsync(string sellerId, CancellationToken cancellationToken = default)
+    {
+        var all = await _unitOfWork.ProductRepository.GetAllWithDetailsAsync(cancellationToken);
+        return all.Where(p => p.SellerId == sellerId).ToList();
+    }
 }

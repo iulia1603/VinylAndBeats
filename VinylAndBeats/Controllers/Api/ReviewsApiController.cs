@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using VinylAndBeats.DTOs;
 using VinylAndBeats.Mappings;
 using VinylAndBeats.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace VinylAndBeats.Controllers.Api;
 
@@ -27,9 +28,9 @@ public class ReviewsApiController : ControllerBase
         return Ok(reviews.ToDtoList());
     }
 
-    // POST: /api/products/5/reviews — necesita login (cookie din MVC)
+    // POST: /api/products/5/reviews 
     [HttpPost]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ProducesResponseType(typeof(ReviewDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -11,10 +11,10 @@ public class Product : BaseEntity
     [Required]
     public string Description { get; set; } = string.Empty;
 
-    [Range(0, 1000000)]
+    [Range(0.01, 1000000)]
     public decimal Price { get; set; }
 
-    [Range(0, 100000)]
+    [Range(1, 100000)]
     public int Stock { get; set; }
 
     public string? ImageUrl { get; set; }

@@ -15,8 +15,6 @@ public class TagService : ITagService
     public async Task<List<Tag>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _unitOfWork.TagRepository.GetAllAsync(cancellationToken);
 
-    public async Task<Tag?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        => await _unitOfWork.TagRepository.GetByIdAsync(id, cancellationToken);
     public async Task<List<Tag>> GetByIdsAsync(List<int> ids, CancellationToken cancellationToken = default)
     => await _unitOfWork.TagRepository.GetByIdsAsync(ids, cancellationToken);
     public async Task AddAsync(Tag tag, CancellationToken cancellationToken = default)

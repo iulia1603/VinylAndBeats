@@ -36,8 +36,8 @@ public class CartController : Controller
         return View(vm);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+    [HttpGet]
+    [Authorize]
     public async Task<IActionResult> Add(int productId, int quantity = 1, CancellationToken cancellationToken = default)
     {
         try
@@ -49,7 +49,7 @@ public class CartController : Controller
         {
             TempData["Error"] = ex.Message;
         }
-        return RedirectToAction("Index", "Products");
+        return RedirectToAction("Index", "Cart");
     }
 
     [HttpPost]

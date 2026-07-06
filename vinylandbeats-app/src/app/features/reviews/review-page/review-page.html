@@ -1,0 +1,24 @@
+<div class="container mt-5" style="max-width: 800px;">
+  <h1 class="mb-2">Recenzii</h1>
+  <h5 class="text-muted mb-4">{{ productName() }}</h5>
+
+  <div *ngIf="loading()" class="alert alert-info">Se încarcă recenziile...</div>
+  <div *ngIf="error()" class="alert alert-danger">{{ error() }}</div>
+
+  <div *ngIf="!loading() && !error() && reviews().length === 0" class="alert alert-warning">
+    Acest produs nu are încă recenzii.
+  </div>
+
+  <div *ngFor="let r of reviews()" class="card mb-2">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <strong>{{ r.authorName }}</strong>
+        <span class="text-warning">
+          <span *ngFor="let s of [1,2,3,4,5]">{{ s <= r.rating ? '★' : '☆' }}</span>
+        </span>
+      </div>
+      <p class="mb-1">{{ r.comment }}</p>
+      <small class="text-muted">{{ r.createdAt | date:'dd.MM.yyyy HH:mm' }}</small>
+    </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@ public class OrdersController : Controller
             Total = o.Total,
             Items = o.Items.Select(i => new OrderItemViewModel
             {
+                ProductId = i.ProductId,
                 ProductName = i.Product?.Name ?? "N/A",
                 Quantity = i.Quantity,
                 UnitPrice = i.UnitPrice

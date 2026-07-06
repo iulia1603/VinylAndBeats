@@ -21,9 +21,18 @@ else
             <ul class="list-group list-group-flush">
                 @foreach (var item in order.Items)
                 {
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>@item.ProductName × @item.Quantity</span>
-                        <span>@item.Subtotal.ToString("0.00") lei</span>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">
+                                @item.ProductName
+                            </a>
+                            × @item.Quantity
+                        </span>
+                        <span class="d-flex align-items-center gap-3">
+                            <span>@item.Subtotal.ToString("0.00") lei</span>
+                            <a asp-controller="Reviews" asp-action="Create" asp-route-productId="@item.ProductId"
+                               class="btn btn-sm btn-outline-primary">Lasă o recenzie</a>
+                        </span>
                     </li>
                 }
             </ul>

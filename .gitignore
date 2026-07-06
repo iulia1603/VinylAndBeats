@@ -3,3 +3,8 @@ obj/
 .vs/
 node_modules/
 *.user
+*.suo
+node_modules/
+.angular/
+dist/
+

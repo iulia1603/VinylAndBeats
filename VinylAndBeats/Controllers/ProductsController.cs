@@ -34,10 +34,11 @@ public class ProductsController : Controller
     {
         var products = await _productService.GetFilteredAsync(categoryId, search, cancellationToken);
         var categories = await _categoryService.GetAllAsync(cancellationToken);
+        var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         var vm = new ProductsIndexViewModel
         {
-            Products = products.Where(p => p.Stock > 0).ToViewModelList(),
+            Products = products.Where(p => p.Stock > 0).Where(p => p.SellerId != currentUserId).ToViewModelList(),
             Categories = categories,
             SelectedCategoryId = categoryId,
             Search = search
@@ -229,5 +230,13 @@ public class ProductsController : Controller
             .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
             .ToList();
         viewModel.AvailableTags = await _tagService.GetAllAsync(cancellationToken);
+    }
+
+    [Authorize]
+    public async Task<IActionResult> MyProducts(CancellationToken cancellationToken)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var products = await _productService.GetBySellerAsync(userId, cancellationToken);
+        return View(products.ToViewModelList());
     }
 }

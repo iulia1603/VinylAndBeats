@@ -14,7 +14,7 @@ public class CreateProductViewModel
     [Required(ErrorMessage = "Descrierea este obligatorie")]
     public string Description { get; set; } = string.Empty;
 
-    [Range(0, 1000000, ErrorMessage = "Prețul trebuie să fie pozitiv")]
+    [Range(0.01, 1000000, ErrorMessage = "Prețul trebuie să fie pozitiv")]
     [Display(Name = "Preț")]
     public decimal Price { get; set; }
 

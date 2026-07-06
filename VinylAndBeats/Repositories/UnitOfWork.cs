@@ -26,10 +26,13 @@ public class UnitOfWork : IUnitOfWork
 
     public ITagRepository TagRepository
         => _tagRepository ??= new TagRepository(_context);
-    public ICartRepository CartRepository => _cartRepository ??= new CartRepository(_context);
-    public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_context);
+    public ICartRepository CartRepository 
+        => _cartRepository ??= new CartRepository(_context);
+    public IOrderRepository OrderRepository 
+        => _orderRepository ??= new OrderRepository(_context);
 
-    public IReviewRepository ReviewRepository => _reviewRepository ??= new ReviewRepository(_context);
+    public IReviewRepository ReviewRepository 
+        => _reviewRepository ??= new ReviewRepository(_context);
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         => await _context.SaveChangesAsync(cancellationToken);
 }
