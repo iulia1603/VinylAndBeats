@@ -286,6 +286,32 @@ These endpoints are protected using role-based authorization and JWT Bearer auth
 
 ---
 
+## Database Entities
+
+Main entities:
+
+- `ApplicationUser`
+- `Product`
+- `Category`
+- `Tag`
+- `ProductTag`
+- `Cart`
+- `CartItem`
+- `Order`
+- `OrderItem`
+- `Review`
+
+Main relationships:
+
+- `Category` -> `Product`: One-to-Many
+- `ApplicationUser` -> `Product`: One-to-Many
+- `Cart` ->`CartItem`: One-to-Many
+- `Order` -> `OrderItem`: One-to-Many
+- `Product` -> `Review`: One-to-Many
+- `Product` <-> `Tag`: Many-to-Many through `ProductTag`
+
+---
+
 
 ## Screenshots
 
