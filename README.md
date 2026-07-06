@@ -333,6 +333,33 @@ Server-side validation is implemented using Data Annotations in ViewModels, DTOs
 
 ---
 
+## Swagger
+
+Swagger UI is available at:
+
+```txt
+https://localhost:7161/swagger
+```
+
+Protected API endpoints can be tested by:
+
+1. Calling `POST /api/auth/login`
+2. Copying the returned JWT token
+3. Pressing `Authorize` in Swagger
+4. Pasting the token without the `Bearer` prefix
+
+Example protected endpoints:
+
+```txt
+POST /api/categories
+POST /api/tags
+POST /api/products
+PUT /api/products/{id}
+DELETE /api/products/{id}
+```
+
+---
+
 
 ## Screenshots
 
