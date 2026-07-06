@@ -273,6 +273,19 @@ Controller
 
 ---
 
+## Admin-Only Endpoints
+
+The project contains at least two endpoints restricted to the `Admin` role:
+
+```txt
+POST /api/categories
+POST /api/tags
+```
+
+These endpoints are protected using role-based authorization and JWT Bearer authentication.
+
+---
+
 
 ## Screenshots
 
