@@ -312,6 +312,27 @@ Main relationships:
 
 ---
 
+## Validation
+
+The application includes both client-side and server-side validation.
+
+Examples of validation rules:
+
+- Required product name
+- Minimum length for names and descriptions
+- Positive product price
+- Valid stock value
+- Valid email format
+- Password confirmation
+- Review rating between 1 and 5
+- Review comment length validation
+
+Client-side validation is implemented using jQuery Validation and `_ValidationScriptsPartial`.
+
+Server-side validation is implemented using Data Annotations in ViewModels, DTOs and Models.
+
+---
+
 
 ## Screenshots
 
