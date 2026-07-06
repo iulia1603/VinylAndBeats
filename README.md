@@ -159,6 +159,19 @@ The Angular page is opened from a product details page using:
 
 ---
 
+## Default Admin Account
+
+On first run, `SeedData.cs` automatically creates the `Admin` and `User` roles and a default admin account.
+
+Check:
+
+```txt
+VinylAndBeats/Data/SeedData.cs
+```
+
+for the default admin credentials.
+
+---
 
 ## Screenshots
 
