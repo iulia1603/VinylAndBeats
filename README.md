@@ -117,6 +117,47 @@ https://localhost:7161/swagger
 
 ---
 
+## Run Angular Separately
+
+The Angular project is located in:
+
+```txt
+vinylandbeats-app/
+```
+
+To run it separately:
+
+```bash
+cd vinylandbeats-app
+npm install
+npm start
+```
+
+or:
+
+```bash
+ng serve
+```
+
+The Angular development server usually runs at:
+
+```txt
+http://localhost:4200
+```
+
+The built Angular reviews page is also served by the ASP.NET Core backend from:
+
+```txt
+VinylAndBeats/wwwroot/spa/
+```
+
+The Angular page is opened from a product details page using:
+
+```txt
+/spa/index.html?productId={id}
+```
+
+---
 
 
 ## Screenshots
